@@ -5,10 +5,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install -g pnpm && \
-    pnpm install
+RUN npm install
 
-RUN pnpm run build
+RUN npm run build
 
 RUN zip -r dist.zip dist
 
