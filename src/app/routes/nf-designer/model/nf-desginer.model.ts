@@ -5,10 +5,11 @@ export namespace NfDesignerModel {
     // label: string;
     key: string;
     order: number;
+    _editMemo: string;
   }
   // 定义结构变化事件
   export interface StructorChangeEvent {
-    action: 'add' | 'remove' | 'rename' | 'reorder';
+    action: 'add' | 'remove' | 'rename' | 'reorder' | 'select';
     field: FieldDefinition;
     list: FieldDefinition[];
   }

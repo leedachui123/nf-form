@@ -13,6 +13,6 @@
     <app-nf-structor #structor (changeEvent)="onStructureChange($event)"></app-nf-structor>
   </app-nf-pannel>
   <app-nf-pannel nz-col nfTitle="字段属性" nzSpan="8">
-    <app-nf-editer #editer></app-nf-editer>
+    <app-nf-editer #editer (nfOnFormChange)="onPropChange($event)"></app-nf-editer>
   </app-nf-pannel>
 </div>

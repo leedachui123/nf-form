@@ -8,6 +8,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { SFComponent, SFSchema } from '@delon/form';
 import { JsonPipe } from '@angular/common';
 import { NfDesignerModel } from './model/nf-desginer.model';
+import { getEditerFormSchema } from './component/nf-editer/nf-editer-form-schema';
 @Component({
   selector: 'app-nf-designer',
   imports: [NfEditer, NfPreviewer, NfStructor, NzGridModule, NfPannel, NzDividerModule, JsonPipe],
@@ -62,7 +63,7 @@ export class NfDesigner {
         });
         break;
       case 'rename':
-        const toRename = this.formPropDict.find(item => item.key === field.key);
+        const toRename = this.formPropDict.find(item => item.id === field.id);
         if (toRename) {
           toRename.key = field.key;
           toRename.schema.title = field.key;
@@ -73,6 +74,14 @@ export class NfDesigner {
         // 根据 keys 顺序重新排序 formPropDict
         this.formPropDict.sort((a, b) => keys.indexOf(a.key) - keys.indexOf(b.key));
         break;
+      case 'select':
+        if (!field) break;
+        // 选择字段时，重新渲染右侧编辑菜单
+        const { key } = field;
+        // const schema = this.formPropDict.find(item => item.key === key)?.schema;
+        const schema = getEditerFormSchema();
+        this.reRenderEditer(schema!);
+        break;
       default:
         break;
     }
@@ -81,15 +90,26 @@ export class NfDesigner {
   }
 
   // 表单属性改变
-  onPropChange(formPropDict: Record<string, SFSchema>) {}
+  onPropChange(value: any) {
+    console.log('属性改变:', value);
+  }
 
   // 预览表单值改变
   onFormValueChange(value: any) {
-    console.log('表单值改变:', value);
     this.dataToDisplay = value;
   }
 
-  reRenderPreviewer() {
+  private reRenderEditer(schema: SFSchema) {
+    this.nfEditer.render({
+      component: SFComponent,
+      config: {
+        schema,
+        button: null
+      }
+    });
+  }
+
+  private reRenderPreviewer() {
     const schema: SFSchema = this.formPropDict.reduce(
       (schema: SFSchema, curr) => {
         const key = curr.key;
@@ -100,8 +120,6 @@ export class NfDesigner {
         properties: {}
       }
     );
-
-    console.log('新的schema:', schema);
 
     //重新渲染表单
     this.nfPreviewer.render<SFComponent>({

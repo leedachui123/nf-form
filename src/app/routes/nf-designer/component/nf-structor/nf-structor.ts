@@ -11,6 +11,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTooltipModule } from 'ng-zorro-antd/tooltip';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NfDesignerModel } from '../../model/nf-desginer.model';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 type FieldType = 'input' | 'textarea' | 'select' | 'date';
 
@@ -19,6 +20,8 @@ type FieldType = 'input' | 'textarea' | 'select' | 'date';
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     DragDropModule,
     NzButtonModule,
     NzCardModule,
@@ -46,16 +49,22 @@ export class NfStructor {
   editingKey: string | null = null;
   selectedKey: string | null = this.fields[0]?.key ?? null;
 
+  private changeSelectedField(key: string) {
+    this.selectedKey = key;
+    this.changeEvent.emit({ action: 'select', field: this.fields.find(f => f.key === key)!, list: this.fields });
+  }
+
   addField(): void {
     const index = this.fields.length + 1;
     const next: NfDesignerModel.FieldDefinition = {
       id: this.createId(),
       key: `field_${index}`,
+      _editMemo: `field_${index}`,
       order: index
     };
     this.fields = [...this.fields, next];
-    this.selectedKey = next.key;
     this.changeEvent.emit({ action: 'add', field: next, list: this.fields });
+    this.changeSelectedField(next.key);
   }
 
   removeField(key: string): void {
@@ -65,10 +74,10 @@ export class NfStructor {
     if (this.editingKey === key) {
       this.editingKey = null;
     }
-    if (this.selectedKey === key) {
-      this.selectedKey = this.fields[0]?.key ?? null;
-    }
     this.changeEvent.emit({ action: 'remove', field: fieldToRemove, list: this.fields });
+    if (this.selectedKey === key) {
+      this.changeSelectedField(this.fields[0]?.key ?? null);
+    }
   }
 
   onDrop(event: CdkDragDrop<NfDesignerModel.FieldDefinition[]>): void {
@@ -78,24 +87,26 @@ export class NfStructor {
 
   startRename(field: NfDesignerModel.FieldDefinition): void {
     this.editingKey = field.key;
-    this.selectField(field.key);
+    field._editMemo = field.key;
+    this.changeSelectedField(field.key);
   }
 
   confirmRename(field: NfDesignerModel.FieldDefinition): void {
     const key = this?.editingKey?.trim();
     if (!key) return;
-    this.fields = this.fields.map(item => (item.key === field.key ? { ...item, key: key } : item));
+    this.fields = this.fields.map(item => (item.key === field.key ? { ...item, key: field._editMemo, _editMemo: field.key } : item));
     this.editingKey = null;
-
+    field.key = field._editMemo;
     this.changeEvent.emit({ action: 'rename', field: field, list: this.fields });
   }
 
-  cancelRename(): void {
+  cancelRename(field: NfDesignerModel.FieldDefinition): void {
+    field._editMemo = field.key;
     this.editingKey = null;
   }
 
   selectField(key: string): void {
-    this.selectedKey = key;
+    this.changeSelectedField(key);
   }
 
   typeLabel(type: FieldType): string {
