@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { DelonFormModule, SFSchema } from '@delon/form';
 
 @Component({
   selector: 'app-nf-editer',
-  imports: [],
+  imports: [DelonFormModule],
   templateUrl: './nf-editer.html',
-  styles: ``,
+  styles: ``
 })
 export class NfEditer {
-
+  schema: SFSchema = {
+    properties: {
+      name: { type: 'string', title: '姓名' }
+    }
+  };
 }

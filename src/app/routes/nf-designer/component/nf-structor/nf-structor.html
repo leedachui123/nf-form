@@ -1,1 +1,69 @@
-<p>nf-structor works!</p>
+<div class="structor-toolbar">
+  <button nz-button nzType="primary" nzShape="round" (click)="addField()">
+    <span nz-icon nzType="plus"></span>
+    添加字段
+  </button>
+  <span class="hint">拖拽可排序，点击名称可重命名，删除前会确认</span>
+</div>
+
+<nz-card nzTitle="字段列表">
+  <div cdkDropList class="field-list" (cdkDropListDropped)="onDrop($event)">
+    <div *ngFor="let field of fields; trackBy: trackById" class="field-item" cdkDrag>
+      <span nz-icon nzType="holder" nzTheme="outline" cdkDragHandle nz-tooltip="拖拽排序"></span>
+
+      <div class="field-meta">
+        <ng-container *ngIf="editingKey !== field.key; else editTpl">
+          <div class="key-row">
+            <span nz-typography nzType="secondary">{{ field.key }}</span>
+          </div>
+          <!-- <div class="title-row">
+            <span nz-typography nzType="secondary">{{ typeLabel(field.type) }}</span>
+            <span (click)="startRename(field)" nz-tooltip="点击修改名称">{{ field.label }}</span>
+            <nz-tag *ngIf="field.required" nzColor="gold">必填</nz-tag>
+          </div> -->
+        </ng-container>
+
+        <ng-template #editTpl>
+          <!-- <div class="key-row">
+            <span nz-typography nzType="secondary">{{ field.key }}</span>
+          </div> -->
+          <div class="title-row muted">
+            <!-- <span nz-typography nzType="secondary">{{ typeLabel(field.type) }}</span> -->
+            <input nz-input [value]="editingKey" (input)="editingKey = ($event.target).value" placeholder="请输入字段名称" />
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="field-actions">
+        <ng-container *ngIf="editingKey !== field.key; else editingActions">
+          <button nz-button nzType="text" nzSize="small" nz-tooltip="重命名" (click)="startRename(field)">
+            <span nz-icon nzType="edit"></span>
+          </button>
+          <button
+            nz-button
+            nzType="text"
+            nzDanger
+            nzSize="small"
+            nz-popconfirm
+            nzPopconfirmTitle="确认删除该字段？"
+            (nzOnConfirm)="removeField(field.id)"
+            nz-tooltip="删除字段"
+          >
+            <span nz-icon nzType="delete"></span>
+          </button>
+        </ng-container>
+
+        <ng-template #editingActions>
+          <button nz-button nzType="text" nzSize="small" nz-tooltip="保存" (click)="confirmRename(field)">
+            <span nz-icon nzType="check"></span>
+          </button>
+          <button nz-button nzType="text" nzSize="small" nz-tooltip="取消" (click)="cancelRename()">
+            <span nz-icon nzType="close"></span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+
+    <nz-empty *ngIf="fields.length === 0" nzNotFoundContent="暂无字段，点击上方按钮添加" />
+  </div>
+</nz-card>

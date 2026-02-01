@@ -1,11 +1,18 @@
 <div style="height: 100%; width: 100%" nz-row [nzGutter]="16">
-  <app-nf-pannel nz-col nfTitle="预览表单" nzSpan="8">
-    <app-nf-previewer></app-nf-previewer>
-  </app-nf-pannel>
+  <div class="preview-container" nz-col nzSpan="8">
+    <app-nf-pannel nfTitle="预览表单">
+      <app-nf-previewer #previewer (nfOnFormChange)="onFormValueChange($event)"></app-nf-previewer>
+    </app-nf-pannel>
+    <app-nf-pannel nfTitle="表单输出">
+      <section style="height: 100%; width: 100%; padding: 16px; overflow: auto">
+        <section style="height: 100%; background-color: grey; border-radius: 4px"> {{dataToDisplay | json}} </section>
+      </section>
+    </app-nf-pannel>
+  </div>
   <app-nf-pannel nz-col nfTitle="结构设计" nzSpan="8">
-    <app-nf-structor></app-nf-structor>
+    <app-nf-structor #structor (changeEvent)="onStructureChange($event)"></app-nf-structor>
   </app-nf-pannel>
   <app-nf-pannel nz-col nfTitle="字段属性" nzSpan="8">
-    <app-nf-editer></app-nf-editer>
+    <app-nf-editer #editer></app-nf-editer>
   </app-nf-pannel>
 </div>

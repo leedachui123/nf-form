@@ -13,6 +13,12 @@ import { NfTitle } from '../nf-title/nf-title';
       height: 100%;
 
       padding: 8px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      overflow: hidden;
     }
   `
 })

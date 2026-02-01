@@ -6,9 +6,11 @@ import {
   AlipayCircleOutline,
   ArrowDownOutline,
   CopyrightOutline,
+  DragOutline,
   FullscreenExitOutline,
   FullscreenOutline,
   GithubOutline,
+  HolderOutline,
   LockOutline,
   LogoutOutline,
   MailOutline,
@@ -33,5 +35,7 @@ export const ICONS_AUTO = [
   TaobaoCircleOutline,
   ToolOutline,
   UserOutline,
-  WeiboCircleOutline
+  WeiboCircleOutline,
+  DragOutline,
+  HolderOutline
 ];
