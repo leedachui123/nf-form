@@ -22,8 +22,8 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 export class LayoutBasicComponent {
   private readonly settings = inject(SettingsService);
   options: LayoutDefaultOptions = {
-    logoExpanded: `./assets/logo-full.svg`,
-    logoCollapsed: `./assets/logo.svg`,
+    logoExpanded: `./assets/logo-full.png`,
+    logoCollapsed: `./assets/logo.png`,
     hideAside: true
   };
   get user(): User {
