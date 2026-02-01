@@ -8,7 +8,13 @@
 
 <nz-card nzTitle="字段列表">
   <div cdkDropList class="field-list" (cdkDropListDropped)="onDrop($event)">
-    <div *ngFor="let field of fields; trackBy: trackById" class="field-item" cdkDrag>
+    <div
+      *ngFor="let field of fields; trackBy: trackById"
+      class="field-item"
+      [class.active]="field.key === selectedKey"
+      cdkDrag
+      (click)="selectField(field.key)"
+    >
       <span nz-icon nzType="holder" nzTheme="outline" cdkDragHandle nz-tooltip="拖拽排序"></span>
 
       <div class="field-meta">
@@ -46,7 +52,7 @@
             nzSize="small"
             nz-popconfirm
             nzPopconfirmTitle="确认删除该字段？"
-            (nzOnConfirm)="removeField(field.id)"
+            (nzOnConfirm)="removeField(field.key)"
             nz-tooltip="删除字段"
           >
             <span nz-icon nzType="delete"></span>

@@ -34,11 +34,7 @@ type FieldType = 'input' | 'textarea' | 'select' | 'date';
   styleUrl: './nf-structor.less'
 })
 export class NfStructor {
-  fields: NfDesignerModel.FieldDefinition[] = [
-    { id: this.createId(), key: 'name', order: 1 },
-    { id: this.createId(), key: 'phone', order: 2 },
-    { id: this.createId(), key: 'city', order: 3 }
-  ];
+  fields: NfDesignerModel.FieldDefinition[] = [];
 
   readonly fieldTypeOptions: { label: string; value: FieldType }[] = [
     { label: '单行文本', value: 'input' },
@@ -48,6 +44,7 @@ export class NfStructor {
   ];
 
   editingKey: string | null = null;
+  selectedKey: string | null = this.fields[0]?.key ?? null;
 
   addField(): void {
     const index = this.fields.length + 1;
@@ -57,6 +54,7 @@ export class NfStructor {
       order: index
     };
     this.fields = [...this.fields, next];
+    this.selectedKey = next.key;
     this.changeEvent.emit({ action: 'add', field: next, list: this.fields });
   }
 
@@ -66,6 +64,9 @@ export class NfStructor {
     this.fields = this.fields.filter(f => f.key !== key);
     if (this.editingKey === key) {
       this.editingKey = null;
+    }
+    if (this.selectedKey === key) {
+      this.selectedKey = this.fields[0]?.key ?? null;
     }
     this.changeEvent.emit({ action: 'remove', field: fieldToRemove, list: this.fields });
   }
@@ -77,6 +78,7 @@ export class NfStructor {
 
   startRename(field: NfDesignerModel.FieldDefinition): void {
     this.editingKey = field.key;
+    this.selectField(field.key);
   }
 
   confirmRename(field: NfDesignerModel.FieldDefinition): void {
@@ -90,6 +92,10 @@ export class NfStructor {
 
   cancelRename(): void {
     this.editingKey = null;
+  }
+
+  selectField(key: string): void {
+    this.selectedKey = key;
   }
 
   typeLabel(type: FieldType): string {
