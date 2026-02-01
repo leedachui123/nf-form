@@ -91,7 +91,12 @@ export class NfDesigner {
 
   // 表单属性改变
   onPropChange(value: any) {
-    console.log('属性改变:', value);
+    const currentKey = this.nfStructor.selectedKey;
+    const toUpdate = this.formPropDict.find(item => item.key === currentKey);
+    if (toUpdate) {
+      toUpdate.schema = value;
+      this.reRenderPreviewer();
+    }
   }
 
   // 预览表单值改变

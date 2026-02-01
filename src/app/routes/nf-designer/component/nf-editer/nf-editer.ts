@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DelonFormModule, SFSchema } from '@delon/form';
 import { SfRenderBase } from '../../model/sf-render-base';
 
@@ -8,4 +8,7 @@ import { SfRenderBase } from '../../model/sf-render-base';
   template: ``,
   styles: ``
 })
-export class NfEditer extends SfRenderBase {}
+export class NfEditer extends SfRenderBase {
+  @Output()
+  nfOnFormChange = this.nfOnFormChange$;
+}

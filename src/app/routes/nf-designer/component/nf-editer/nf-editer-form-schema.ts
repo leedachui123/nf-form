@@ -5,6 +5,11 @@ const EditerFormSchema: SFSchema = {
     title: {
       type: 'string',
       title: '标题'
+    },
+    type: {
+      type: 'string',
+      default: 'string',
+      title: '类型'
     }
   }
 };
