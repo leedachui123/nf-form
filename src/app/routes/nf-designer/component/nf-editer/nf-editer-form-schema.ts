@@ -1,10 +1,12 @@
 import { SFSchema } from '@delon/form';
 import { cloneDeep } from 'lodash';
+import prot from './prototype.json';
 const EditerFormSchema: SFSchema = {
   properties: {
     title: {
       type: 'string',
-      title: '标题'
+      title: '标题',
+      items: {}
     },
     type: {
       type: 'string',
@@ -15,5 +17,6 @@ const EditerFormSchema: SFSchema = {
 };
 
 export function getEditerFormSchema(): SFSchema {
-  return cloneDeep(EditerFormSchema);
+  console.log('prototype', prot);
+  return cloneDeep(prot as SFSchema);
 }

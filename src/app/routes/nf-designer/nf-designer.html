@@ -5,7 +5,9 @@
     </app-nf-pannel>
     <app-nf-pannel nfTitle="表单输出">
       <section style="height: 100%; width: 100%; padding: 16px; overflow: auto">
-        <section style="height: 100%; background-color: grey; border-radius: 4px"> {{dataToDisplay | json}} </section>
+        <section style="height: 100%; background-color: var(--alain-default-content-bg, #f5f7fa); border-radius: 4px">
+          {{dataToDisplay | json}}
+        </section>
       </section>
     </app-nf-pannel>
   </div>

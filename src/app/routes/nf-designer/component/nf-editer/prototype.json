@@ -1,0 +1,131 @@
+{
+    "properties": {
+        "title": {
+            "type": "string",
+            "title": "字段名称",
+            "minLength": 1,
+            "maxLength": 50,
+            "ui": {
+                "placeholder": "如：用户名"
+            }
+        },
+        "type": {
+            "type": "string",
+            "title": "字段类型",
+            "default": "string",
+            "enum": [
+                "string",
+                "number",
+                "boolean"
+            ]
+        },
+        "readOnly": {
+            "type": "boolean",
+            "title": "只读",
+            "default": false
+        },
+        "placeholder": {
+            "type": "string",
+            "title": "占位提示",
+            "ui": {
+                "placeholder": "请输入占位提示"
+            }
+        },
+        "default": {
+            "type": "string",
+            "title": "默认值",
+            "ui": {
+                "placeholder": "可选"
+            }
+        },
+        "minLength": {
+            "type": "number",
+            "title": "最小长度",
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "string"
+                    ]
+                }
+            }
+        },
+        "maxLength": {
+            "type": "number",
+            "title": "最大长度",
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "string"
+                    ]
+                }
+            }
+        },
+        "minimum": {
+            "type": "number",
+            "title": "最小值",
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "number"
+                    ]
+                }
+            }
+        },
+        "maximum": {
+            "type": "number",
+            "title": "最大值",
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "number"
+                    ]
+                }
+            }
+        },
+        "description": {
+            "type": "string",
+            "title": "描述",
+            "ui": {
+                "widget": "textarea",
+                "autosize": {
+                    "minRows": 2,
+                    "maxRows": 4
+                }
+            }
+        },
+        "ui": {
+            "type": "object",
+            "title": "UI配置",
+            "properties": {
+                "placeholder": {
+                    "type": "string",
+                    "title": "占位提示",
+                    "ui": {
+                        "placeholder": "请输入占位提示"
+                    }
+                },
+                "widget": {
+                    "type": "string",
+                    "title": "组件类型",
+                    "enum": [
+                        "input",
+                        "textarea",
+                        "select",
+                        "radio",
+                        "checkbox"
+                    ],
+                    "default": "input"
+                }
+            },
+            "ui": {
+                "type": "card",
+                "showExpand": false
+            }
+        }
+    },
+    "required": [
+        "key",
+        "title",
+        "type"
+    ]
+}

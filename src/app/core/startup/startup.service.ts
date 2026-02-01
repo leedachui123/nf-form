@@ -55,13 +55,10 @@ export class StartupService {
     this.titleService.suffix = res.app?.name;
   }
 
-  
   private viaHttp(): Observable<void> {
     return this.appData$.pipe(map((res: NzSafeAny) => this.handleAppData(res)));
   }
-  
 
-  
   private viaMock(): Observable<void> {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
@@ -70,7 +67,7 @@ export class StartupService {
     // }
     // mock
     const app: any = {
-      name: `NG-ALAIN`,
+      name: `NF-DForm`,
       description: `NG-ZORRO admin panel front-end framework`
     };
     const user: any = {
