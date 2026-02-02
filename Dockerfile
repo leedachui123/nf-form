@@ -11,7 +11,7 @@ RUN pnpm run build
 
 # 使用nginx服务器来发布Dist包
 FROM nginx:alpine
-COPY --from=0 /app/dist /usr/share/nginx/html
+COPY /app/dist/nf /usr/share/nginx/html
 # COPY ./nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 
