@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { NfEditer } from './component/nf-editer/nf-editer';
 import { NfPreviewer } from './component/nf-previewer/nf-previewer';
 import { NfStructor } from './component/nf-structor/nf-structor';
@@ -9,6 +9,7 @@ import { SFComponent, SFSchema } from '@delon/form';
 import { JsonPipe } from '@angular/common';
 import { NfDesignerModel } from './model/nf-desginer.model';
 import { getEditerFormSchema } from './component/nf-editer/nf-editer-form-schema';
+import { FormSchemaLoader } from './service/form-schema-loader';
 @Component({
   selector: 'app-nf-designer',
   imports: [NfEditer, NfPreviewer, NfStructor, NzGridModule, NfPannel, NzDividerModule, JsonPipe],
@@ -40,6 +41,8 @@ export class NfDesigner {
   @ViewChild(NfEditer, { static: true }) nfEditer!: NfEditer;
   @ViewChild(NfPreviewer, { static: true }) nfPreviewer!: NfPreviewer;
   @ViewChild(NfStructor, { static: true }) nfStructor!: NfStructor;
+
+  private schemaLoaderSvc = inject(FormSchemaLoader);
 
   formPropDict: Array<{
     id: string;
@@ -78,8 +81,8 @@ export class NfDesigner {
         if (!field) break;
         // 选择字段时，重新渲染右侧编辑菜单
         const { key } = field;
-        // const schema = this.formPropDict.find(item => item.key === key)?.schema;
-        const schema = getEditerFormSchema();
+        const schemaValue = this.formPropDict.find(item => item.key === key)?.schema;
+        const schema = this.schemaLoaderSvc.getEditerFormSchema(schemaValue);
         this.reRenderEditer(schema!);
         break;
       default:
@@ -104,7 +107,7 @@ export class NfDesigner {
     this.dataToDisplay = value;
   }
 
-  private reRenderEditer(schema: SFSchema) {
+  private reRenderEditer(schema: SFSchema, data?: any) {
     this.nfEditer.render({
       component: SFComponent,
       config: {

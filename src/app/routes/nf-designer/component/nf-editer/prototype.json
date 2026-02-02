@@ -24,13 +24,6 @@
             "title": "只读",
             "default": false
         },
-        "placeholder": {
-            "type": "string",
-            "title": "占位提示",
-            "ui": {
-                "placeholder": "请输入占位提示"
-            }
-        },
         "default": {
             "type": "string",
             "title": "默认值",
@@ -82,6 +75,30 @@
                 }
             }
         },
+        "exclusiveMinimum": {
+            "type": "boolean",
+            "title": "排除最小值",
+            "default": false,
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "number"
+                    ]
+                }
+            }
+        },
+        "exclusiveMaximum": {
+            "type": "boolean",
+            "title": "排除最大值",
+            "default": false,
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "number"
+                    ]
+                }
+            }
+        },
         "description": {
             "type": "string",
             "title": "描述",
@@ -91,6 +108,18 @@
                     "minRows": 2,
                     "maxRows": 4
                 }
+            }
+        },
+        "pattern": {
+            "type": "string",
+            "title": "正则表达式",
+            "ui": {
+                "visibleIf": {
+                    "type": [
+                        "string"
+                    ]
+                },
+                "placeholder": "请输入正则表达式"
             }
         },
         "ui": {
@@ -113,8 +142,7 @@
                         "select",
                         "radio",
                         "checkbox"
-                    ],
-                    "default": "input"
+                    ]
                 }
             },
             "ui": {
