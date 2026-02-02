@@ -16,8 +16,7 @@
     "icon": "ng g ng-alain:plugin icon",
     "lint": "npm run lint:ts && npm run lint:style",
     "lint:ts": "ng lint",
-    "lint:style": "npx stylelint \\\"src/**/*.less\\\" --fix",
-    "prepare": "husky install"
+    "lint:style": "npx stylelint \\\"src/**/*.less\\\" --fix"
   },
   "private": true,
   "packageManager": "pnpm@10.15.0",
