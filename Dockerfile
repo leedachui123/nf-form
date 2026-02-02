@@ -7,7 +7,7 @@ COPY . ./
 # 全局安装pnpm，并使用pnpm安装依赖和构建项目
 RUN npm install -g pnpm@10.15.0 --loglevel=error
 RUN pnpm install --loglevel=error
-RUN pnpm run build --loglevel=error
+RUN pnpm run build
 
 # 使用nginx服务器来发布Dist包
 FROM nginx:alpine
